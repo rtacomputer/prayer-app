@@ -1,0 +1,98 @@
+1:"$Sreact.fragment"
+2:I[16383,["/prayer-app/_next/static/chunks/40hfvfgfer_it.js","/prayer-app/_next/static/chunks/06cbc-0_j3r4y.js"],"ChantReaderClient"]
+3:Tdc1,พาหุง สะหัสสะมะภินิมมิตะสาวุธันตัง คิรีเมขะลัง อุทิตะโฆระสะเสนะมารัง
+ทานาทิธัมมะวิธินา ชิตะวา มุนินโท ตันเตชะสา ภะวะตุ เต* ชะยะมังคะลานิฯ
+
+มาราติเรกะมะภิยุชฌิตะสัพพะรัตติง โฆรัมปะนาฬะวะกะมักขะมะถัทธะยักขัง
+ขันตีสุทันตะวิธินา ชิตะวา มุนินโท ตันเตชะสา ภะวะตุ เต* ชะยะมังคะลานิฯ
+
+นาฬาคิริง คะชะวะรัง อะติมัตตะภูตัง ทาวัคคิจักกะมะสะนีวะ สุทารุณันตัง
+เมตตัมพุเสกะวิธินา ชิตะวา มุนินโท ตันเตชะสา ภะวะตุ เต* ชะยะมังคะลานิฯ
+
+อุกขิตตะขัคคะมะติหัตถะสุทารุณันตัง ธาวันติโยชะนะปะถังคุลิมาละวันตัง
+อิทธีภิสังขะตะมะโน ชิตะวา มุนินโท ตันเตชะสา ภะวะตุ เต* ชะยะมังคะลานิฯ
+
+กัตตวานะ กัฏฐะมุทะรัง อิวะ คัพภินียา จิญจายะ ทุฏฐะวะจะนัง ชะนะกายะมัชเฌ
+สันเตนะ โสมะวิธินา ชิตะวา มุนินโท ตันเตชะสา ภะวะตุ เต* ชะยะมังคะลานิฯ
+
+สัจจัง วิหายะ มะติสัจจะกาวาทะเกตุง วาทาภิโรปิตะมะนัง อะติอันธะภูตัง
+ปัญญาปะทีปะชะลิโต ชิตะวา มุนินโท ตันเตชะสา ภะวะตุ เต* ชะยะมังคะลานิฯ
+
+นันโทปะนันทะภุชะคัง วิพุธัง มะหิทธิง ปุตเตนะ เถระภุชะเคนะ ทะมาปะยันโต
+อิทธูปะเทสะวิธินา ชิตะวา มุนินโท ตันเตชะสา ภะวะตุ เต* ชะยะมังคะลานิฯ
+
+ทุคคาหะทิฏฐิภุชะเคนะ สุทัฏฐะหัตถัง พรัหมัง วิสุทธิชุติมิทธิพะกาภิธานัง
+ญาณาคะเทนะ วิธินา ชิตะวา มุนินโท ตันเตชะสา ภะวะตุ เต* ชะยะมังคะลานิฯ
+
+เอตาปิ พุทธะชะยะมังคะละอัฉฐะคาถา โย วาจะโน ทินะทิเน สะระเต มะตันที
+หิตวานะเนกะวิวิธานิ จุปัททะวานิ โมกขัง สุขัง อะธิคะเมยยะ นะโร สะปัญโญฯ4:Tf4e,พา-หุง สะ-หัด-สะ-มะ-ภิ-นิม-มิ-ตะ-สา-วุ-ทัน-ตัง คิ-รี-เม-ขะ-ลัง อุ-ทิ-ตะ-โฆ-ระ-สะ-เส-นะ-มา-รัง
+ทา-นา-ทิ-ธัม-มะ-วิ-ธิ-นา ชิ-ตะ-วา มุ-นิน-โท ตัน-เต-ชะ-สา ภะ-วะ-ตุ เต ชะ-ยะ-มัง-คะ-ลา-นิฯ
+
+มา-รา-ติ-เร-กะ-มะ-ภิ-ยุช-ฌิ-ตะ-สับ-พะ-รัด-ติง โฆ-รัม-ปะ-นา-ฬะ-วะ-กะ-มัก-ขะ-มะ-ถัด-ทะ-ยัก-ขัง
+ขัน-ตี-สุ-ทัน-ตะ-วิ-ธิ-นา ชิ-ตะ-วา มุ-นิน-โท ตัน-เต-ชะ-สา ภะ-วะ-ตุ เต ชะ-ยะ-มัง-คะ-ลา-นิฯ
+
+นา-ฬา-คิ-ริง คะ-ชะ-วะ-รัง อะ-ติ-มัด-ตะ-ภู-ตัง ทา-วัค-คิ-จัก-กะ-มะ-สะ-นี-วะ สุ-ทา-รุ-ณัน-ตัง
+เมด-ตัม-พุ-เส-กะ-วิ-ธิ-นา ชิ-ตะ-วา มุ-นิน-โท ตัน-เต-ชะ-สา ภะ-วะ-ตุ เต ชะ-ยะ-มัง-คะ-ลา-นิฯ
+
+อุก-ขิด-ตะ-ขัก-คะ-มะ-ติ-หัด-ถะ-สุ-ทา-รุ-ณัน-ตัง ธา-วัน-ติ-โย-ชะ-นะ-ปะ-ถัง-คุ-ลิ-มา-ละ-วัน-ตัง
+อิด-ธี-ภิ-สัง-ขะ-ตะ-มะ-โน ชิ-ตะ-วา มุ-นิน-โท ตัน-เต-ชะ-สา ภะ-วะ-ตุ เต ชะ-ยะ-มัง-คะ-ลา-นิฯ
+
+กัด-ตะ-วา-นะ กัด-ฐะ-มุ-ทะ-รัง อิ-วะ คับ-ภิ-นี-ยา จิญ-จา-ยะ ทุด-ฐะ-วะ-จะ-นัง ชะ-นะ-กา-ยะ-มัด-เฌ
+สัน-เต-นะ โส-มะ-วิ-ธิ-นา ชิ-ตะ-วา มุ-นิน-โท ตัน-เต-ชะ-สา ภะ-วะ-ตุ เต ชะ-ยะ-มัง-คะ-ลา-นิฯ
+
+สัด-จัง วิ-หา-ยะ มะ-ติ-สัด-จะ-กา-วา-ทะ-เก-ตุง วา-ทา-ภิ-โร-ปิ-ตะ-มะ-นัง อะ-ติ-อัน-ทะ-ภู-ตัง
+ปัญ-ญา-ปะ-ที-ปะ-ชะ-ลิ-โต ชิ-ตะ-วา มุ-นิน-โท ตัน-เต-ชะ-สา ภะ-วะ-ตุ เต ชะ-ยะ-มัง-คะ-ลา-นิฯ
+
+นัน-โท-ปะ-นัน-ทะ-ภุ-ชะ-คัง วิ-พุ-ธัง มะ-หิด-ธิง ปุด-เต-นะ เถ-ระ-ภุ-ชะ-เก-นะ ทะ-มา-ปะ-ยัน-โต
+อิด-ธู-ปะ-เท-สะ-วิ-ธิ-นา ชิ-ตะ-วา มุ-นิน-โท ตัน-เต-ชะ-สา ภะ-วะ-ตุ เต ชะ-ยะ-มัง-คะ-ลา-นิฯ
+
+ทุค-คา-หะ-ทิด-ฐิ-ภุ-ชะ-เก-นะ สุ-ทัด-ฐะ-หัด-ถัง พรัม-มัง วิ-สุท-ธิ-ชุ-ติ-มิด-ธิ-พะ-กา-ภิ-ทา-นัง
+ญา-ณา-คะ-เท-นะ วิ-ธิ-นา ชิ-ตะ-วา มุ-นิน-โท ตัน-เต-ชะ-สา ภะ-วะ-ตุ เต ชะ-ยะ-มัง-คะ-ลา-นิฯ
+
+เอ-ตา-ปิ พุท-ทะ-ชะ-ยะ-มัง-คะ-ละ-อัด-ฐะ-คา-ถา โย วา-จะ-โน ทิ-นะ-ทิ-เน สะ-ระ-เต มะ-ตัน-ที
+หิด-ตวา-นะ-เน-กะ-วิ-วิ-ธา-นิ จุ-ปัด-ทะ-วา-นิ โมก-ขัง สุ-ขัง อะ-ธิ-คะ-เมย-ยะ นะ-โร สะ-ปัญ-โญฯ5:T1255,พระจอมมุนีได้ทรงชนะพญามารผู้เนรมิตแขนพันข้างถืออาวุธ ขี่ช้างคีรีเมขละพร้อมด้วยเสนามารโห่ร้องกึกก้อง ด้วยวิธีธรรมมีทานบารมีเป็นต้น ด้วยเดชานุภาพนั้น ขอชัยมงคลทั้งหลายจงมีแก่ท่านฯ
+
+พระจอมมุนีได้ทรงชนะอาฬวกยักษ์ผู้ดุร้ายกระด้าง สู้รบยิ่งกว่ามารตลอดรุ่ง ด้วยวิธีทรงทรมานด้วยขันติบารมีอันดีงาม ด้วยเดชานุภาพนั้น ขอชัยมงคลทั้งหลายจงมีแก่ท่านฯ
+
+พระจอมมุนีได้ทรงชนะช้างตัวประเสริฐชื่อนาฬาคิรี ซึ่งเมามันดุร้ายยิ่งนัก ดุจไฟป่าและจักรและสายฟ้าอันน่าสะพรึงกลัว ด้วยวิธีรดพรมด้วยน้ำคือพระเมตตา ด้วยเดชานุภาพนั้น ขอชัยมงคลทั้งหลายจงมีแก่ท่านฯ
+
+พระจอมมุนีได้ทรงชนะโจรชูรดาบมีมืออันชุ่มด้วยเลือด วิ่งไล่ตามทาง ๓ โยชน์ คือองคุลิมาล ด้วยวิธีทรงบันดาลอิทธิฤทธิ์ทางใจ ด้วยเดชานุภาพนั้น ขอชัยมงคลทั้งหลายจงมีแก่ท่านฯ
+
+พระจอมมุนีได้ทรงชนะคำกล่าวร้ายของนางจิญจมาณวิกา ผูกท่อนไม้ที่ท้องทำเสมือนหญิงมีครรภ์ กล่าวร้ายในท่ามกลางหมู่ชน ด้วยวิธีทรงสงบนิ่งสง่างาม ด้วยเดชานุภาพนั้น ขอชัยมงคลทั้งหลายจงมีแก่ท่านฯ
+
+พระจอมมุนีได้ทรงชนะสัจจกนิครนถ์ ผู้ละความสัตย์ ยกวาทะของตนดั่งธง มีใจมืดบอดยิ่งนัก ด้วยประทีปแห่งปัญญาอันรุ่งโรจน์ ด้วยเดชานุภาพนั้น ขอชัยมงคลทั้งหลายจงมีแก่ท่านฯ
+
+พระจอมมุนีได้ทรงชนะพญานาคราชชื่อนันโทปนันทะ ผู้มีความรู้มากมีฤทธิ์มาก โดยโปรดให้พระโมคคัลลานเถระพุทธชิโนรสเนรมิตกายเป็นนาคราชไปปราบ ด้วยวิธีสั่งสอนฤทธิ์ ด้วยเดชานุภาพนั้น ขอชัยมงคลทั้งหลายจงมีแก่ท่านฯ
+
+พระจอมมุนีได้ทรงชนะพรหมผู้มีนามว่าพกาพรหม ผู้สำคัญตนว่าบริสุทธิ์มีฤทธิ์รุ่งเรือง ผู้ถูกงูใหญ่คือมิจฉาทิฏฐิรัดตรึงไว้แน่น ด้วยวิธีวางยาคือญาณทัสสนะ ด้วยเดชานุภาพนั้น ขอชัยมงคลทั้งหลายจงมีแก่ท่านฯ
+
+นรชนใดผู้มีปัญญา ไม่เกียจคร้าน สวดและระลึกถึงพระพุทธชัยมงคล ๘ คาถานี้ทุกๆ วัน ย่อมละอุปัทวะอันตรายทั้งหลายเป็นอเนกประการ และบรรลุถึงความหลุดพ้นอันเป็นสุขแท้จริงฯ9:X
+e:X
+e:C
+0:{"buildId":"wENdrqU7k_qDYSoAZFfRO","data":[{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"chant":{"id":7,"categoryId":4,"categoryName":"บทถวายพรพระ","categorySlug":"blessing-prayers","title":"บทชัยมงคลคาถา (พาหุงมหากา)","slug":"phahung-mahakha","shortDescription":"คุ้มครอง ป้องกันภยันตราย มีชัยชนะเหนืออุปสรรคทั้งปวง","contentPali":"$3","contentReading":"$4","contentTranslation":"$5","description":null,"image":null,"audioUrl":null,"audioDuration":"05:30","sortOrder":1,"isFeatured":true,"isActive":true}}],["$L6"],"$L7"]}],"isPartial":"$@8","staleTime":"$9","varyParams":null},{"rsc":"$La","isPartial":"$@b","staleTime":"$9","varyParams":null},{"rsc":"$Lc","isPartial":"$@d","staleTime":"$9","varyParams":"$e"},{"rsc":"$Lf","isPartial":"$@10","staleTime":"$9","varyParams":"$e"},{"rsc":"$L11","isPartial":"$@12","staleTime":"$9","varyParams":null}],"isUpgradeableISRFallback":false,"a":"$@13","rootVaryParams":null,"needsRuntimeRequest":"$@14"}
+15:I[97367,["/prayer-app/_next/static/chunks/40hfvfgfer_it.js"],"OutletBoundary"]
+16:"$Sreact.suspense"
+18:I[97367,["/prayer-app/_next/static/chunks/40hfvfgfer_it.js"],"ViewportBoundary"]
+19:I[97367,["/prayer-app/_next/static/chunks/40hfvfgfer_it.js"],"MetadataBoundary"]
+1a:I[27201,["/prayer-app/_next/static/chunks/40hfvfgfer_it.js"],"IconMark"]
+1b:I[39756,["/prayer-app/_next/static/chunks/40hfvfgfer_it.js"],"default"]
+1c:I[37457,["/prayer-app/_next/static/chunks/40hfvfgfer_it.js"],"default"]
+1d:I[80492,["/prayer-app/_next/static/chunks/40hfvfgfer_it.js"],"ThemeProvider"]
+1e:I[98518,["/prayer-app/_next/static/chunks/40hfvfgfer_it.js"],"PWARegister"]
+:HL["/prayer-app/_next/static/chunks/2ig9ctf_azx6p.css","style"]
+6:["$","script","script-0",{"src":"/prayer-app/_next/static/chunks/06cbc-0_j3r4y.js","async":true}]
+7:["$","$L15",null,{"children":["$","$16",null,{"name":"Next.MetadataOutlet","children":"$@17"}]}]
+a:["$","$1","h",{"children":[null,["$","$L18",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes"}],["$","meta","2",{"name":"theme-color","content":"#B8862D"}]]}],["$","div",null,{"hidden":true,"children":["$","$L19",null,{"children":["$","$16",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"บทชัยมงคลคาถา (พาหุงมหากา) - บทสวดมนต์ดิจิทัล"}],["$","meta","1",{"name":"description","content":"คุ้มครอง ป้องกันภยันตราย มีชัยชนะเหนืออุปสรรคทั้งปวง"}],["$","link","2",{"rel":"manifest","href":"/prayer-app/manifest.json"}],["$","meta","3",{"name":"mobile-web-app-capable","content":"yes"}],["$","meta","4",{"name":"apple-mobile-web-app-title","content":"บทสวดมนต์"}],["$","meta","5",{"name":"apple-mobile-web-app-status-bar-style","content":"default"}],["$","link","6",{"rel":"icon","href":"/prayer-app/favicon.ico?favicon.2vob68tjqpejf.ico","sizes":"256x256","type":"image/x-icon"}],["$","$L1a","7",{}]]}]}]}],null]}]
+c:["$","$1","c",{"children":[null,["$","$L1b",null,{"parallelRouterKey":"children","template":["$","$L1c",null,{}]}]]}]
+f:["$","$1","c",{"children":[null,["$","$L1b",null,{"parallelRouterKey":"children","template":["$","$L1c",null,{}]}]]}]
+11:["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/prayer-app/_next/static/chunks/2ig9ctf_azx6p.css","precedence":"next"}],["$","script","script-0",{"src":"/prayer-app/_next/static/chunks/40hfvfgfer_it.js","async":true}]],["$","html",null,{"lang":"th","suppressHydrationWarning":true,"children":[["$","head",null,{"children":[["$","link",null,{"rel":"preconnect","href":"https://fonts.googleapis.com"}],["$","link",null,{"rel":"preconnect","href":"https://fonts.gstatic.com","crossOrigin":"anonymous"}],["$","link",null,{"rel":"manifest","href":"/prayer-app/manifest.json"}],["$","link",null,{"rel":"apple-touch-icon","href":"/prayer-app/icons/apple-touch-icon.png"}],["$","meta",null,{"name":"mobile-web-app-capable","content":"yes"}],["$","meta",null,{"name":"apple-mobile-web-app-capable","content":"yes"}]]}],["$","body",null,{"className":"antialiased min-h-screen bg-[#FFF9EF] dark:bg-[#14110D] text-[#3E332A] dark:text-[#F4ECE1]","children":["$","$L1d",null,{"children":[["$","$L1e",null,{}],["$","div",null,{"className":"min-h-screen max-w-md mx-auto relative flex flex-col bg-[#FFF9EF] dark:bg-[#14110D] shadow-2xl border-x border-[#EDE1CF]/60 dark:border-[#2A2218]","children":["$","main",null,{"className":"flex-1 pb-20","children":["$","$L1b",null,{"parallelRouterKey":"children","template":["$","$L1c",null,{}],"notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]]}]}]}]]}]}]]}]]}]
+17:null
+14:true
+9:300
+9:C
+13:0
+b:"$undefined"
+d:"$undefined"
+10:"$undefined"
+12:"$undefined"
+8:"$undefined"
