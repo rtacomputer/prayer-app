@@ -2,7 +2,6 @@ import React from 'react';
 import { getAllCategories, getAllChants, getStats } from '@/lib/db';
 import { AdminClient } from './AdminClient';
 
-export const dynamic = 'force-dynamic';
 
 export default function AdminPage() {
   const categories = getAllCategories();

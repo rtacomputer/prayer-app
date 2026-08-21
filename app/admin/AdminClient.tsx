@@ -1,8 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
 import { Chant, Category } from '@/lib/types';
 import { Header } from '@/components/Header';
 import { BottomNav } from '@/components/BottomNav';
@@ -18,7 +16,6 @@ interface AdminClientProps {
 }
 
 export function AdminClient({ initialCategories, initialChants, stats }: AdminClientProps) {
-  const router = useRouter();
   const [activeTab, setActiveTab] = useState<'chants' | 'categories'>('chants');
   const [categories, setCategories] = useState<Category[]>(initialCategories);
   const [chants, setChants] = useState<Chant[]>(initialChants);
@@ -33,22 +30,49 @@ export function AdminClient({ initialCategories, initialChants, stats }: AdminCl
 
   const [saving, setSaving] = useState(false);
 
-  const refreshData = async () => {
+  // Load custom chants/categories from localStorage on mount
+  useEffect(() => {
     try {
-      const [catRes, chantRes] = await Promise.all([
-        fetch('/api/admin/categories').then((r) => r.json()),
-        fetch('/api/admin/chants').then((r) => r.json()),
-      ]);
-      if (catRes.success) setCategories(catRes.data);
-      if (chantRes.success) setChants(chantRes.data);
-      router.refresh();
+      const savedChants = localStorage.getItem('prayer_custom_chants');
+      if (savedChants) {
+        const parsed = JSON.parse(savedChants);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setChants(parsed);
+        }
+      }
+
+      const savedCategories = localStorage.getItem('prayer_custom_categories');
+      if (savedCategories) {
+        const parsed = JSON.parse(savedCategories);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setCategories(parsed);
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const saveChantsToStorage = (updated: Chant[]) => {
+    setChants(updated);
+    try {
+      localStorage.setItem('prayer_custom_chants', JSON.stringify(updated));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const saveCategoriesToStorage = (updated: Category[]) => {
+    setCategories(updated);
+    try {
+      localStorage.setItem('prayer_custom_categories', JSON.stringify(updated));
     } catch (e) {
       console.error(e);
     }
   };
 
   // Handle Save Chant
-  const handleSaveChant = async (e: React.FormEvent) => {
+  const handleSaveChant = (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingChant?.title || !editingChant?.categoryId || !editingChant?.contentPali) {
       alert('กรุณากรอกชื่อบทสวด หมวดหมู่ และบทสวดบาลี');
@@ -56,43 +80,56 @@ export function AdminClient({ initialCategories, initialChants, stats }: AdminCl
     }
 
     setSaving(true);
-    try {
-      const isEdit = Boolean(editingChant.id);
-      const res = await fetch('/api/admin/chants', {
-        method: isEdit ? 'PUT' : 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(editingChant),
-      }).then((r) => r.json());
+    const cat = categories.find((c) => c.id === Number(editingChant.categoryId));
+    const slug = editingChant.slug || editingChant.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\u0E00-\u0E7F-]/g, '') + '-' + Date.now();
 
-      if (res.success) {
-        setIsChantModalOpen(false);
-        setEditingChant(null);
-        await refreshData();
-      } else {
-        alert(res.error || 'เกิดข้อผิดพลาด');
-      }
-    } catch (err) {
-      alert('Error saving chant');
-    } finally {
-      setSaving(false);
+    if (editingChant.id) {
+      // Edit
+      const updated = chants.map((c) =>
+        c.id === editingChant.id
+          ? ({
+              ...c,
+              ...editingChant,
+              categoryName: cat?.name || c.categoryName,
+            } as Chant)
+          : c
+      );
+      saveChantsToStorage(updated);
+    } else {
+      // Create new
+      const newChant: Chant = {
+        id: Date.now(),
+        categoryId: Number(editingChant.categoryId),
+        categoryName: cat?.name || 'ทั่วไป',
+        categorySlug: cat?.slug || 'general',
+        title: editingChant.title,
+        slug,
+        shortDescription: editingChant.shortDescription || '',
+        contentPali: editingChant.contentPali,
+        contentReading: editingChant.contentReading || '',
+        contentTranslation: editingChant.contentTranslation || '',
+        audioDuration: editingChant.audioDuration || '03:00',
+        sortOrder: chants.length + 1,
+        isFeatured: Boolean(editingChant.isFeatured),
+        isActive: Boolean(editingChant.isActive ?? true),
+      };
+      saveChantsToStorage([...chants, newChant]);
     }
+
+    setIsChantModalOpen(false);
+    setEditingChant(null);
+    setSaving(false);
   };
 
   // Handle Delete Chant
-  const handleDeleteChant = async (id: number) => {
+  const handleDeleteChant = (id: number) => {
     if (!confirm('คุณต้องการลบบทสวดนี้ใช่หรือไม่?')) return;
-    try {
-      const res = await fetch(`/api/admin/chants?id=${id}`, { method: 'DELETE' }).then((r) => r.json());
-      if (res.success) {
-        await refreshData();
-      }
-    } catch (e) {
-      alert('Error deleting chant');
-    }
+    const updated = chants.filter((c) => c.id !== id);
+    saveChantsToStorage(updated);
   };
 
   // Handle Save Category
-  const handleSaveCategory = async (e: React.FormEvent) => {
+  const handleSaveCategory = (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingCategory?.name) {
       alert('กรุณากรอกชื่อหมวดหมู่');
@@ -100,39 +137,41 @@ export function AdminClient({ initialCategories, initialChants, stats }: AdminCl
     }
 
     setSaving(true);
-    try {
-      const isEdit = Boolean(editingCategory.id);
-      const res = await fetch('/api/admin/categories', {
-        method: isEdit ? 'PUT' : 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(editingCategory),
-      }).then((r) => r.json());
+    const slug = editingCategory.slug || editingCategory.name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\u0E00-\u0E7F-]/g, '') + '-' + Date.now();
 
-      if (res.success) {
-        setIsCategoryModalOpen(false);
-        setEditingCategory(null);
-        await refreshData();
-      } else {
-        alert(res.error || 'เกิดข้อผิดพลาด');
-      }
-    } catch (err) {
-      alert('Error saving category');
-    } finally {
-      setSaving(false);
+    if (editingCategory.id) {
+      // Edit
+      const updated = categories.map((cat) =>
+        cat.id === editingCategory.id
+          ? ({ ...cat, ...editingCategory } as Category)
+          : cat
+      );
+      saveCategoriesToStorage(updated);
+    } else {
+      // Create new
+      const newCat: Category = {
+        id: Date.now(),
+        name: editingCategory.name,
+        slug,
+        description: editingCategory.description || '',
+        icon: editingCategory.icon || 'lotus',
+        sortOrder: categories.length + 1,
+        isActive: Boolean(editingCategory.isActive ?? true),
+        chantCount: 0,
+      };
+      saveCategoriesToStorage([...categories, newCat]);
     }
+
+    setIsCategoryModalOpen(false);
+    setEditingCategory(null);
+    setSaving(false);
   };
 
   // Handle Delete Category
-  const handleDeleteCategory = async (id: number) => {
-    if (!confirm('คุณต้องการลบหมวดหมู่นี้ใช่หรือไม่? บทสวดในหมวดนี้จะถูกลบไปด้วย')) return;
-    try {
-      const res = await fetch(`/api/admin/categories?id=${id}`, { method: 'DELETE' }).then((r) => r.json());
-      if (res.success) {
-        await refreshData();
-      }
-    } catch (e) {
-      alert('Error deleting category');
-    }
+  const handleDeleteCategory = (id: number) => {
+    if (!confirm('คุณต้องการลบหมวดหมู่นี้ใช่หรือไม่?')) return;
+    const updated = categories.filter((c) => c.id !== id);
+    saveCategoriesToStorage(updated);
   };
 
   return (

@@ -1,13 +1,18 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { getChantBySlug } from '@/lib/db';
+import { getAllChants, getChantBySlug } from '@/lib/db';
 import { ChantReaderClient } from './ChantReaderClient';
 import type { Metadata } from 'next';
 
-export const dynamic = 'force-dynamic';
-
 interface ChantPageProps {
   params: Promise<{ slug: string }>;
+}
+
+export function generateStaticParams() {
+  const chants = getAllChants(200);
+  return chants.map((ch) => ({
+    slug: ch.slug,
+  }));
 }
 
 export async function generateMetadata({ params }: ChantPageProps): Promise<Metadata> {

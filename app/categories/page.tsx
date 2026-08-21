@@ -6,7 +6,6 @@ import { getAllCategories } from '@/lib/db';
 import { CategoryIcon } from '@/components/CategoryIcons';
 import { ChevronRight } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
 
 export default function CategoriesPage() {
   const categories = getAllCategories();

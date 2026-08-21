@@ -8,7 +8,6 @@ import { BottomNav } from '@/components/BottomNav';
 import { getAllCategories, getFeaturedChants, getAllChants } from '@/lib/db';
 import { ChevronRight, Sparkles, Flame, Clock } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
 
 export default function HomePage() {
   const categories = getAllCategories();

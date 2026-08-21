@@ -4,12 +4,17 @@ import { Header } from '@/components/Header';
 import { BottomNav } from '@/components/BottomNav';
 import { ChantCard } from '@/components/ChantCard';
 import { CategoryIcon } from '@/components/CategoryIcons';
-import { getCategoryBySlug, getChantsByCategory } from '@/lib/db';
-
-export const dynamic = 'force-dynamic';
+import { getAllCategories, getCategoryBySlug, getChantsByCategory } from '@/lib/db';
 
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;
+}
+
+export function generateStaticParams() {
+  const categories = getAllCategories();
+  return categories.map((cat) => ({
+    slug: cat.slug,
+  }));
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {

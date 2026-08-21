@@ -2,7 +2,6 @@ import React, { Suspense } from 'react';
 import { getAllCategories, getAllChants } from '@/lib/db';
 import { SearchClient } from './SearchClient';
 
-export const dynamic = 'force-dynamic';
 
 export default function SearchPage() {
   const categories = getAllCategories();
