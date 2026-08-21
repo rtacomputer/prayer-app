@@ -1,0 +1,2188 @@
+# แผนพัฒนาเว็บแอป “บทสวดมนต์” (Mobile-First)
+
+> เอกสารฉบับนี้ใช้เป็น Project Plan และ Technical Blueprint สำหรับเริ่มพัฒนาเว็บแอปบทสวดมนต์ โดยเน้นการใช้งานบนมือถือเป็นหลัก รองรับการจัดหมวดหมู่บทสวด การค้นหา การอ่านบทสวด และระบบหลังบ้านสำหรับเพิ่ม/แก้ไขเนื้อหา
+
+---
+
+# 1. เป้าหมายของระบบ
+
+สร้างเว็บแอปสำหรับรวบรวม “บทสวดมนต์” ในรูปแบบดิจิทัลที่ใช้งานง่ายบนมือถือ โดยผู้ใช้สามารถ:
+
+- เลือกบทสวดตามหมวดหมู่
+- ค้นหาบทสวด
+- เปิดอ่านบทสวดแบบ Mobile Friendly
+- ปรับขนาดตัวอักษร
+- เปิดโหมดกลางคืน
+- บันทึกบทสวดที่ชื่นชอบ
+- อ่านต่อจากตำแหน่งเดิม
+- ใช้งานแบบ PWA ได้ในอนาคต
+- เพิ่มระบบเสียงสวดมนต์ภายหลังได้
+
+ระบบต้องมีฝั่ง Admin สำหรับจัดการบทสวดและหมวดหมู่ โดยไม่ต้องแก้ไขโค้ดทุกครั้งที่มีการเพิ่มเนื้อหา
+
+---
+
+# 2. แนวคิดหลักของ UX/UI
+
+แนวทางการออกแบบ:
+
+- Mobile First
+- เรียบง่าย
+- อ่านง่าย
+- สีสบายตา
+- มีกลิ่นอายธรรมะ
+- ลดสิ่งรบกวนในหน้าอ่านบทสวด
+
+ธีมแนะนำ:
+
+- สีพื้น: Cream / Off White
+- สีหลัก: Gold / Warm Brown
+- สีรอง: Light Beige
+- สีตัวอักษร: Dark Brown / Charcoal
+- Accent: Gold
+
+ตัวอย่าง Design Token:
+
+```css
+:root {
+  --color-primary: #B8862D;
+  --color-primary-dark: #8D641F;
+  --color-background: #FFF9EF;
+  --color-surface: #FFFFFF;
+  --color-text: #3E332A;
+  --color-text-muted: #8B7D6B;
+  --color-border: #EDE1CF;
+  --color-accent: #D7A844;
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+}
+```
+
+---
+
+# 3. กลุ่มผู้ใช้งาน
+
+## 3.1 ผู้ใช้งานทั่วไป
+
+ไม่จำเป็นต้อง Login ในเวอร์ชันแรก
+
+สามารถ:
+
+- ดูหมวดหมู่บทสวด
+- ดูรายการบทสวด
+- อ่านบทสวด
+- ค้นหา
+- ปรับขนาดตัวอักษร
+- เปิด Dark Mode
+- บันทึกรายการโปรดบนเครื่อง
+- จำตำแหน่งอ่านล่าสุดบนเครื่อง
+
+---
+
+## 3.2 ผู้ดูแลระบบ (Admin)
+
+ต้อง Login
+
+สามารถ:
+
+- เพิ่มหมวดหมู่
+- แก้ไขหมวดหมู่
+- ลบ/ปิดการแสดงหมวดหมู่
+- กำหนดลำดับหมวดหมู่
+- เพิ่มบทสวด
+- แก้ไขบทสวด
+- ปิดการเผยแพร่บทสวด
+- กำหนดลำดับบทสวด
+- ใส่คำบาลี
+- ใส่คำอ่าน
+- ใส่คำแปล
+- ใส่คำอธิบาย
+- เพิ่มภาพประกอบ
+- เพิ่มไฟล์เสียงในอนาคต
+
+---
+
+# 4. Technology Stack
+
+## Frontend + Backend
+
+แนะนำ:
+
+```text
+Next.js
+TypeScript
+React
+Tailwind CSS
+```
+
+เหตุผล:
+
+- Next.js ทำ Frontend และ Backend API อยู่ใน Project เดียว
+- Deployment ง่าย
+- Mobile Responsive ทำได้ดี
+- SEO ดี
+- รองรับ Server Rendering
+- รองรับ PWA ได้
+- เหมาะกับเว็บที่มี Content จำนวนมาก
+- TypeScript ช่วยลด Bug ระยะยาว
+
+---
+
+# 5. Framework
+
+แนะนำ:
+
+```text
+Next.js 16+
+App Router
+TypeScript
+```
+
+โครงสร้าง:
+
+```text
+Browser
+   |
+   v
+Next.js UI
+   |
+   v
+Server Actions / API Routes
+   |
+   v
+Prisma ORM
+   |
+   v
+SQLite
+```
+
+ในอนาคตสามารถเปลี่ยน SQLite เป็น PostgreSQL ได้โดยไม่ต้องเปลี่ยน Application Architecture มาก
+
+---
+
+# 6. UI Framework
+
+แนะนำ:
+
+```text
+Tailwind CSS
+shadcn/ui
+Lucide Icons
+```
+
+เหตุผล:
+
+### Tailwind CSS
+
+- Responsive ง่าย
+- Bundle ไม่ใหญ่เกินจำเป็น
+- เขียน Mobile First ได้สะดวก
+- ดูแล Design System ง่าย
+
+### shadcn/ui
+
+เหมาะสำหรับ Component เช่น:
+
+- Button
+- Card
+- Dialog
+- Drawer
+- Sheet
+- Input
+- Select
+- Tabs
+- Dropdown
+- Toast
+
+### Lucide Icons
+
+ใช้สำหรับ:
+
+- Search
+- Home
+- Category
+- Favorite
+- Settings
+- Font Size
+- Moon Mode
+- Share
+
+---
+
+# 7. Database
+
+เริ่มต้นใช้:
+
+```text
+SQLite
+```
+
+ร่วมกับ:
+
+```text
+Prisma ORM
+```
+
+ข้อดี:
+
+- Setup ง่าย
+- Database อยู่ในไฟล์เดียว
+- Backup ง่าย
+- เหมาะกับระบบเริ่มต้น
+- ไม่ต้องติดตั้ง Database Server
+
+ไฟล์:
+
+```text
+prisma/dev.db
+```
+
+เมื่อระบบโต สามารถย้ายไป:
+
+```text
+PostgreSQL
+```
+
+โดย Prisma ช่วยลดภาระ Migration
+
+---
+
+# 8. Database Schema
+
+## categories
+
+```text
+id
+name
+slug
+description
+icon
+image
+sort_order
+is_active
+created_at
+updated_at
+```
+
+ตัวอย่าง:
+
+```text
+1
+บทสวดประจำวัน
+daily-prayers
+บทสวดสำหรับใช้ในชีวิตประจำวัน
+lotus
+NULL
+1
+true
+```
+
+---
+
+## chants
+
+```text
+id
+category_id
+title
+slug
+short_description
+content_pali
+content_reading
+content_translation
+description
+image
+audio_url
+sort_order
+is_featured
+is_active
+created_at
+updated_at
+```
+
+Relationship:
+
+```text
+categories 1 ---- N chants
+```
+
+---
+
+# 9. Prisma Schema ตัวอย่าง
+
+```prisma
+model Category {
+  id          Int      @id @default(autoincrement())
+  name        String
+  slug        String   @unique
+  description String?
+  icon        String?
+  image       String?
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+
+  chants      Chant[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Chant {
+  id                 Int      @id @default(autoincrement())
+  categoryId         Int
+
+  title              String
+  slug               String   @unique
+  shortDescription   String?
+
+  contentPali        String?
+  contentReading     String?
+  contentTranslation String?
+
+  description        String?
+
+  image              String?
+  audioUrl           String?
+
+  sortOrder          Int      @default(0)
+  isFeatured         Boolean  @default(false)
+  isActive           Boolean  @default(true)
+
+  category           Category @relation(
+    fields: [categoryId],
+    references: [id]
+  )
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([isActive])
+}
+```
+
+---
+
+# 10. Local Storage
+
+ข้อมูลส่วนตัวที่ยังไม่จำเป็นต้องอยู่ใน Database ให้เก็บใน Browser
+
+เช่น:
+
+```text
+favorites
+readingHistory
+fontSize
+theme
+lastReadingPosition
+```
+
+ตัวอย่าง:
+
+```json
+{
+  "fontSize": "large",
+  "theme": "light"
+}
+```
+
+ข้อดี:
+
+- ไม่ต้องมีระบบสมาชิกตั้งแต่แรก
+- Privacy ดี
+- Database เบา
+- ระบบไม่ซับซ้อน
+
+---
+
+# 11. หน้าหลักของระบบ
+
+## 11.1 Home
+
+Route:
+
+```text
+/
+```
+
+ประกอบด้วย:
+
+```text
+Header
+Hero
+Search
+Categories
+Featured Chants
+Recently Read
+Bottom Navigation
+```
+
+---
+
+# 12. หน้า Category
+
+Route:
+
+```text
+/categories
+```
+
+แสดง:
+
+```text
+บทสวดประจำวัน
+
+บทแผ่เมตตา
+
+บทสวดก่อนนอน
+
+บทถวายพรพระ
+
+บทสวดวันพระ
+
+บทสวดเสริมสิริมงคล
+```
+
+---
+
+# 13. หน้ารายการบทสวด
+
+Route:
+
+```text
+/category/[slug]
+```
+
+ตัวอย่าง:
+
+```text
+/category/daily-prayers
+```
+
+แสดง Card:
+
+```text
+ชื่อบทสวด
+
+รายละเอียดสั้น
+
+Favorite
+
+สถานะอ่านล่าสุด
+```
+
+---
+
+# 14. หน้าอ่านบทสวด
+
+Route:
+
+```text
+/chant/[slug]
+```
+
+ถือเป็นหน้าที่สำคัญที่สุด
+
+Layout:
+
+```text
+Header
+
+ชื่อบทสวด
+
+Tabs
+ ├─ บทสวด
+ ├─ คำอ่าน
+ └─ คำแปล
+
+เนื้อหาบทสวด
+
+Reader Toolbar
+
+Previous / Next
+```
+
+---
+
+# 15. Reader Mode
+
+Toolbar ด้านล่าง:
+
+```text
+A-
+A
+A+
+
+Dark Mode
+
+Favorite
+
+Share
+```
+
+ควรมี:
+
+```text
+line-height: 1.8 - 2.0
+```
+
+เพื่อให้บทสวดอ่านง่าย
+
+Font:
+
+```text
+Sarabun
+Noto Sans Thai
+Noto Serif Thai
+```
+
+แนะนำใช้:
+
+```text
+Noto Serif Thai
+```
+
+สำหรับตัวบทสวด
+
+และ:
+
+```text
+Sarabun
+```
+
+สำหรับ UI
+
+---
+
+# 16. Search
+
+Route:
+
+```text
+/search
+```
+
+ค้นจาก:
+
+```text
+title
+short_description
+content_pali
+content_reading
+content_translation
+```
+
+MVP ใช้ SQLite Search ปกติก่อน
+
+เมื่อข้อมูลเยอะ ค่อยเพิ่ม:
+
+```text
+SQLite FTS5
+```
+
+---
+
+# 17. Favorite
+
+เวอร์ชันแรก:
+
+```text
+localStorage
+```
+
+Route:
+
+```text
+/favorites
+```
+
+ไม่ต้อง Login
+
+ในอนาคตถ้ามีระบบสมาชิกจึง Sync เข้า Database
+
+---
+
+# 18. Reading History
+
+เก็บ:
+
+```text
+chantId
+lastPosition
+lastReadAt
+```
+
+ตัวอย่าง:
+
+```json
+{
+  "chantId": 12,
+  "lastPosition": 0.58,
+  "lastReadAt": "2026-08-21T08:00:00"
+}
+```
+
+---
+
+# 19. Navigation มือถือ
+
+ใช้ Bottom Navigation
+
+```text
+หน้าแรก
+
+หมวดหมู่
+
+ค้นหา
+
+รายการโปรด
+
+ตั้งค่า
+```
+
+ตัวอย่าง:
+
+```text
+┌─────────────────────────┐
+│                         │
+│       CONTENT           │
+│                         │
+├─────────────────────────┤
+│ 🏠   ▦   🔍   ♡   ⚙    │
+│ Home Cat Search Fav Set │
+└─────────────────────────┘
+```
+
+Desktop สามารถเปลี่ยนเป็น Top Navigation ได้
+
+---
+
+# 20. Admin
+
+Route:
+
+```text
+/admin
+```
+
+---
+
+# 21. Admin Dashboard
+
+แสดง:
+
+```text
+จำนวนหมวดหมู่
+
+จำนวนบทสวด
+
+บทสวดล่าสุด
+
+บทสวดที่ยัง Draft
+```
+
+---
+
+# 22. Admin Category
+
+```text
+/admin/categories
+```
+
+Features:
+
+```text
+Create
+
+Edit
+
+Delete
+
+Enable / Disable
+
+Sort
+```
+
+---
+
+# 23. Admin Chants
+
+```text
+/admin/chants
+```
+
+Features:
+
+```text
+Create
+
+Edit
+
+Preview
+
+Publish
+
+Disable
+
+Sort
+```
+
+---
+
+# 24. Editor
+
+Form:
+
+```text
+ชื่อบทสวด
+
+Slug
+
+หมวดหมู่
+
+คำอธิบายสั้น
+
+บาลี
+
+คำอ่าน
+
+คำแปล
+
+คำอธิบาย
+
+รูปภาพ
+
+เสียง
+
+Featured
+
+Published
+```
+
+แนะนำให้รองรับ Markdown
+
+เช่น:
+
+```markdown
+นะโม ตัสสะ ภควโต...
+
+**บทแปล**
+
+ขอนอบน้อมแด่...
+```
+
+Library:
+
+```text
+react-markdown
+```
+
+---
+
+# 25. Authentication
+
+เฉพาะ Admin
+
+MVP สามารถใช้:
+
+```text
+Admin Username
+Admin Password
+```
+
+ผ่าน:
+
+```text
+Auth.js
+```
+
+หรือใช้:
+
+```text
+Google Login
+```
+
+ภายหลัง
+
+---
+
+# 26. Project Structure
+
+```text
+prayer-app/
+
+├─ app/
+│
+├─ app/(public)/
+│  ├─ page.tsx
+│
+│  ├─ categories/
+│  │  └─ page.tsx
+│
+│  ├─ category/
+│  │  └─ [slug]/
+│  │     └─ page.tsx
+│
+│  ├─ chant/
+│  │  └─ [slug]/
+│  │     └─ page.tsx
+│
+│  ├─ search/
+│  │  └─ page.tsx
+│
+│  ├─ favorites/
+│  │  └─ page.tsx
+│
+│  └─ settings/
+│     └─ page.tsx
+│
+├─ app/admin/
+│
+│  ├─ page.tsx
+│
+│  ├─ categories/
+│  │
+│  └─ chants/
+│
+├─ components/
+│
+│  ├─ layout/
+│  ├─ navigation/
+│  ├─ chant/
+│  ├─ category/
+│  └─ ui/
+│
+├─ lib/
+│
+│  ├─ db.ts
+│  ├─ utils.ts
+│  └─ storage.ts
+│
+├─ prisma/
+│
+│  ├─ schema.prisma
+│  ├─ seed.ts
+│  └─ dev.db
+│
+├─ public/
+│
+│  ├─ images/
+│  └─ icons/
+│
+├─ styles/
+│
+├─ package.json
+│
+└─ README.md
+```
+
+---
+
+# 27. Component Architecture
+
+ควรแยก Component ตั้งแต่แรก
+
+ตัวอย่าง:
+
+```text
+AppHeader
+
+BottomNavigation
+
+SearchBar
+
+CategoryCard
+
+ChantCard
+
+ChantContent
+
+ReaderToolbar
+
+FontSizeControl
+
+ThemeToggle
+
+FavoriteButton
+
+ShareButton
+```
+
+หลีกเลี่ยง Component ใหญ่เกินไป
+
+---
+
+# 28. State Management
+
+MVP ไม่จำเป็นต้องใช้ Redux
+
+ใช้:
+
+```text
+React State
+
+Context
+
+localStorage
+```
+
+เพียงพอ
+
+ถ้าในอนาคต State ซับซ้อนค่อยใช้:
+
+```text
+Zustand
+```
+
+---
+
+# 29. API
+
+ตัวอย่าง API:
+
+```text
+GET /api/categories
+
+GET /api/categories/[slug]
+
+GET /api/chants
+
+GET /api/chants/[slug]
+
+GET /api/search?q=เมตตา
+```
+
+Admin:
+
+```text
+POST /api/admin/categories
+
+PATCH /api/admin/categories/:id
+
+DELETE /api/admin/categories/:id
+
+POST /api/admin/chants
+
+PATCH /api/admin/chants/:id
+
+DELETE /api/admin/chants/:id
+```
+
+---
+
+# 30. Image Storage
+
+MVP:
+
+```text
+/public/uploads
+```
+
+ใน Production แนะนำ:
+
+```text
+Cloudinary
+```
+
+หรือ Object Storage
+
+เช่น:
+
+```text
+S3
+Cloudflare R2
+Supabase Storage
+```
+
+---
+
+# 31. PWA
+
+ควรออกแบบเผื่อไว้ตั้งแต่ต้น
+
+Features:
+
+```text
+Install App
+
+Home Screen Icon
+
+Offline Shell
+
+Cache Static Assets
+```
+
+ในอนาคตสามารถ Cache บทสวดที่ผู้ใช้เลือกไว้สำหรับ Offline
+
+---
+
+# 32. Offline Mode
+
+Phase 2
+
+ใช้:
+
+```text
+Service Worker
+IndexedDB
+```
+
+แนวคิด:
+
+```text
+เปิดบทสวด
+
+↓
+
+Download Content
+
+↓
+
+เก็บ IndexedDB
+
+↓
+
+เปิดอ่านได้แม้ไม่มี Internet
+```
+
+---
+
+# 33. Performance
+
+เป้าหมาย:
+
+```text
+First Load < 2 sec
+
+Lighthouse Performance > 90
+
+Mobile First
+
+Lazy Load Image
+
+Server Rendering Content
+```
+
+Next.js Image:
+
+```tsx
+import Image from "next/image";
+```
+
+---
+
+# 34. SEO
+
+URL ต้องอ่านง่าย
+
+ตัวอย่าง:
+
+```text
+/chant/metta-sutta
+
+/category/evening-prayers
+```
+
+Metadata:
+
+```text
+title
+
+description
+
+OpenGraph
+
+canonical
+```
+
+---
+
+# 35. Accessibility
+
+ควรรองรับ:
+
+```text
+font scaling
+
+contrast
+
+screen reader
+
+semantic HTML
+
+button size >= 44px
+```
+
+เพราะมีโอกาสที่ผู้ใช้งานเป็นผู้สูงอายุ
+
+จึงควรให้ความสำคัญกับ:
+
+```text
+ตัวอักษรใหญ่
+
+ปุ่มใหญ่
+
+Contrast
+
+Navigation ง่าย
+```
+
+---
+
+# 36. Responsive Breakpoints
+
+Mobile First
+
+```text
+Mobile
+320px - 767px
+
+Tablet
+768px - 1023px
+
+Desktop
+1024px+
+```
+
+ออกแบบ Mobile ก่อน
+
+แล้วค่อยเพิ่ม:
+
+```css
+md:
+lg:
+xl:
+```
+
+---
+
+# 37. Security
+
+Admin:
+
+```text
+Password Hash
+
+Session Cookie
+
+CSRF Protection
+
+Rate Limit Login
+```
+
+Input:
+
+```text
+Validate Server Side
+
+Sanitize Markdown
+
+Limit Upload Type
+
+Limit Upload Size
+```
+
+---
+
+# 38. Validation
+
+ใช้:
+
+```text
+Zod
+```
+
+ตัวอย่าง:
+
+```ts
+const chantSchema = z.object({
+  title: z.string().min(1),
+  slug: z.string().min(1),
+  categoryId: z.number(),
+});
+```
+
+---
+
+# 39. Development Phases
+
+## Phase 1 — Project Foundation
+
+สร้าง:
+
+```text
+Next.js
+
+TypeScript
+
+Tailwind
+
+shadcn/ui
+
+Prisma
+
+SQLite
+```
+
+จากนั้น:
+
+```text
+Design Tokens
+
+Global Layout
+
+Mobile Navigation
+```
+
+---
+
+# 40. Phase 2 — Database
+
+สร้าง:
+
+```text
+Category
+
+Chant
+```
+
+พร้อม Seed Data
+
+ตัวอย่าง:
+
+```text
+บทสวดประจำวัน
+
+บทแผ่เมตตา
+
+บทสวดก่อนนอน
+```
+
+---
+
+# 41. Phase 3 — Public UI
+
+สร้าง:
+
+```text
+Home
+
+Categories
+
+Chant List
+
+Chant Reader
+
+Search
+```
+
+---
+
+# 42. Phase 4 — Reader Experience
+
+เพิ่ม:
+
+```text
+Font Size
+
+Dark Mode
+
+Favorite
+
+Share
+
+Previous / Next
+
+Reading Position
+```
+
+---
+
+# 43. Phase 5 — Admin
+
+สร้าง:
+
+```text
+Admin Login
+
+Dashboard
+
+Category CRUD
+
+Chant CRUD
+
+Preview
+```
+
+---
+
+# 44. Phase 6 — PWA
+
+เพิ่ม:
+
+```text
+Manifest
+
+Service Worker
+
+App Icon
+
+Install Prompt
+```
+
+---
+
+# 45. Phase 7 — Testing
+
+ทดสอบ:
+
+```text
+Android Chrome
+
+iPhone Safari
+
+iPad
+
+Desktop
+```
+
+Resolution:
+
+```text
+320px
+
+375px
+
+390px
+
+414px
+
+768px
+
+1024px
+```
+
+---
+
+# 46. Phase 8 — Deployment
+
+Development:
+
+```text
+SQLite
+```
+
+Production หาก Traffic ยังไม่มาก:
+
+```text
+SQLite
+```
+
+แต่ถ้าระบบ Online แบบ Serverless ต้องตรวจสอบเรื่อง Persistent Storage
+
+หาก Deploy บน Platform ที่ไม่มี Persistent Disk ควรใช้:
+
+```text
+Turso
+```
+
+ซึ่งเป็น SQLite-compatible
+
+หรือเปลี่ยนเป็น:
+
+```text
+PostgreSQL
+```
+
+---
+
+# 47. Deployment Architecture แนะนำ
+
+ถ้าต้องการง่าย:
+
+```text
+Next.js
+
+↓
+
+Vercel
+
+↓
+
+Turso
+```
+
+หรือ:
+
+```text
+Next.js
+
+↓
+
+VPS / Docker
+
+↓
+
+SQLite
+```
+
+ตัวเลือกที่สองง่ายและควบคุม Database ได้เต็มที่
+
+---
+
+# 48. Docker
+
+สามารถเพิ่มใน Phase Production
+
+```text
+Dockerfile
+
+docker-compose.yml
+```
+
+Architecture:
+
+```text
+Nginx
+
+↓
+
+Next.js
+
+↓
+
+SQLite
+```
+
+---
+
+# 49. Backup
+
+SQLite Backup ง่ายมาก
+
+Backup:
+
+```text
+database.sqlite
+```
+
+ทุกวัน
+
+ควรเก็บ:
+
+```text
+7 Daily
+
+4 Weekly
+
+12 Monthly
+```
+
+---
+
+# 50. Logging
+
+MVP:
+
+```text
+console
+```
+
+Production:
+
+```text
+Pino
+```
+
+และ Error Monitoring:
+
+```text
+Sentry
+```
+
+สามารถเพิ่มภายหลัง
+
+---
+
+# 51. Feature Roadmap
+
+## Version 1
+
+```text
+Categories
+
+Chants
+
+Search
+
+Reader
+
+Favorites
+
+Dark Mode
+
+Admin
+```
+
+---
+
+## Version 1.5
+
+```text
+PWA
+
+Offline Reading
+
+Reading History
+
+Share
+```
+
+---
+
+## Version 2
+
+```text
+Audio Chanting
+
+Playlist
+
+Timer
+
+Auto Scroll
+```
+
+---
+
+## Version 3
+
+```text
+User Account
+
+Cloud Favorites
+
+Cloud Reading History
+
+Sync Devices
+```
+
+---
+
+# 52. Audio Feature
+
+ในอนาคต:
+
+```text
+audioUrl
+```
+
+สามารถเก็บ:
+
+```text
+MP3
+```
+
+Feature:
+
+```text
+Play
+
+Pause
+
+Playback Speed
+
+Repeat
+
+Sleep Timer
+```
+
+---
+
+# 53. Auto Scroll
+
+เหมาะมากสำหรับบทสวด
+
+User กด:
+
+```text
+Start Auto Scroll
+```
+
+ระบบเลื่อนข้อความอัตโนมัติ
+
+สามารถเลือกระดับ:
+
+```text
+Slow
+
+Normal
+
+Fast
+```
+
+Feature นี้ควรอยู่ใน Version 2
+
+---
+
+# 54. Sequence / Prayer Set
+
+อนาคตควรมีความสามารถจัด “ชุดบทสวด”
+
+ตัวอย่าง:
+
+```text
+ชุดสวดมนต์ก่อนนอน
+```
+
+ประกอบด้วย:
+
+```text
+1. บูชาพระรัตนตรัย
+
+2. นมัสการพระพุทธเจ้า
+
+3. ไตรสรณคมน์
+
+4. แผ่เมตตา
+```
+
+Database:
+
+```text
+chant_sets
+
+chant_set_items
+```
+
+---
+
+# 55. Database Phase 2
+
+```text
+chant_sets
+
+id
+name
+slug
+description
+```
+
+```text
+chant_set_items
+
+id
+chant_set_id
+chant_id
+sort_order
+```
+
+Relationship:
+
+```text
+ChantSet
+
+   |
+
+   +-- Chant
+
+   +-- Chant
+
+   +-- Chant
+```
+
+---
+
+# 56. Coding Standards
+
+ใช้:
+
+```text
+TypeScript Strict
+
+ESLint
+
+Prettier
+```
+
+Naming:
+
+```text
+camelCase
+
+PascalCase
+
+kebab-case URL
+```
+
+หลีกเลี่ยง:
+
+```text
+any
+```
+
+ถ้าไม่จำเป็น
+
+---
+
+# 57. Git Strategy
+
+Branch:
+
+```text
+main
+
+develop
+
+feature/*
+```
+
+ตัวอย่าง:
+
+```text
+feature/home-page
+
+feature/chant-reader
+
+feature/admin-chants
+```
+
+Commit:
+
+```text
+feat: add chant reader
+
+fix: correct mobile navigation
+
+refactor: simplify chant query
+
+docs: update database schema
+```
+
+---
+
+# 58. Recommended Package List
+
+```bash
+next
+react
+react-dom
+
+typescript
+
+tailwindcss
+
+lucide-react
+
+@prisma/client
+prisma
+
+zod
+
+react-markdown
+
+next-themes
+
+clsx
+tailwind-merge
+```
+
+Admin Auth:
+
+```text
+next-auth
+```
+
+---
+
+# 59. MVP Definition
+
+ถือว่า Version แรกพร้อมใช้งานเมื่อ:
+
+- [ ] เปิดเว็บบนมือถือได้ดี
+- [ ] ดูหมวดหมู่ได้
+- [ ] ดูรายการบทสวดได้
+- [ ] เปิดอ่านบทสวดได้
+- [ ] มีบาลี
+- [ ] มีคำอ่าน
+- [ ] มีคำแปล
+- [ ] ค้นหาได้
+- [ ] ปรับขนาดตัวอักษรได้
+- [ ] Dark Mode ได้
+- [ ] Favorite ได้
+- [ ] Admin Login ได้
+- [ ] Admin เพิ่มหมวดหมู่ได้
+- [ ] Admin เพิ่มบทสวดได้
+- [ ] Admin แก้ไขบทสวดได้
+- [ ] Admin ปิดการเผยแพร่ได้
+- [ ] Responsive Mobile / Tablet / Desktop
+- [ ] Deploy Production ได้
+
+---
+
+# 60. ลำดับการเขียนจริง
+
+ไม่ควรเขียน Admin ก่อน
+
+ลำดับที่แนะนำ:
+
+```text
+1. Setup Project
+
+↓
+
+2. Design System
+
+↓
+
+3. Mobile Layout
+
+↓
+
+4. Database
+
+↓
+
+5. Seed Data
+
+↓
+
+6. Homepage
+
+↓
+
+7. Categories
+
+↓
+
+8. Chant List
+
+↓
+
+9. Chant Reader
+
+↓
+
+10. Search
+
+↓
+
+11. Favorites
+
+↓
+
+12. Settings
+
+↓
+
+13. Admin
+
+↓
+
+14. PWA
+
+↓
+
+15. Testing
+
+↓
+
+16. Deploy
+```
+
+---
+
+# 61. Architecture Principle
+
+ระบบนี้ควรยึดหลัก:
+
+```text
+Simple First
+```
+
+ไม่จำเป็นต้องเริ่มด้วย:
+
+```text
+Microservices
+
+Redis
+
+RabbitMQ
+
+Kubernetes
+
+Multiple Databases
+```
+
+เพราะจะเพิ่ม Complexity โดยไม่สร้าง Value ในช่วงแรก
+
+Architecture ที่เหมาะสม:
+
+```text
+Modular Monolith
+```
+
+คือ:
+
+```text
+Next.js Application
+
++ UI
+
++ Business Logic
+
++ API
+
++ Database
+
+```
+
+อยู่ Project เดียว แต่แยก Module ชัดเจน
+
+ข้อดี:
+
+```text
+Development เร็ว
+
+Deploy ง่าย
+
+Debug ง่าย
+
+Backup ง่าย
+
+Maintain ง่าย
+```
+
+และสามารถขยายภายหลังได้
+
+---
+
+# 62. แนวทางสำคัญสำหรับ Mobile
+
+ทุกหน้าต้องเริ่ม Design ที่:
+
+```text
+375px
+```
+
+ก่อน
+
+แล้วค่อยขยาย Tablet / Desktop
+
+Touch Target:
+
+```text
+>= 44px
+```
+
+Font บทสวด:
+
+```text
+18px - 24px
+```
+
+Line Height:
+
+```text
+1.8+
+```
+
+Reader Width:
+
+```text
+max-width: 720px
+```
+
+เพื่อให้ Desktop อ่านไม่กว้างเกินไป
+
+---
+
+# 63. สิ่งที่ไม่ควรทำใน Version แรก
+
+ยังไม่ต้องสร้าง:
+
+```text
+User Registration
+
+Social Feed
+
+Comment
+
+Chat
+
+Complex Permission
+
+Microservices
+
+AI
+
+Recommendation Engine
+```
+
+เพราะยังไม่ใช่ Core Value
+
+Core Value คือ:
+
+```text
+ค้นหาบทสวดง่าย
+
+เปิดอ่านเร็ว
+
+อ่านสบายตา
+
+จัดการเนื้อหาง่าย
+```
+
+---
+
+# 64. Definition of Done
+
+Feature ถือว่าเสร็จเมื่อ:
+
+```text
+Mobile ใช้งานได้
+
+Tablet ใช้งานได้
+
+ไม่มี Layout Overflow
+
+ไม่มี Console Error
+
+Input Validation ครบ
+
+Loading State มี
+
+Empty State มี
+
+Error State มี
+
+Accessibility เบื้องต้นผ่าน
+```
+
+---
+
+# 65. เป้าหมายสุดท้าย
+
+ระบบควรให้ความรู้สึกเหมือน:
+
+> “หนังสือสวดมนต์ดิจิทัลที่หยิบขึ้นมาใช้ได้ทุกเวลา”
+
+ไม่ควรให้ความรู้สึกเหมือน CMS หรือเว็บไซต์บทความทั่วไป
+
+Focus:
+
+```text
+Calm
+
+Readable
+
+Fast
+
+Simple
+
+Spiritual
+
+Mobile First
+```
+
+---
+
+# สรุป Technology Stack
+
+```text
+Frontend
+Next.js + React + TypeScript
+
+UI
+Tailwind CSS + shadcn/ui
+
+Icons
+Lucide
+
+Database
+SQLite
+
+ORM
+Prisma
+
+Validation
+Zod
+
+Content
+Markdown
+
+Theme
+next-themes
+
+Authentication
+Auth.js
+
+PWA
+Service Worker
+
+Deployment
+VPS + Docker + SQLite
+หรือ
+Vercel + Turso
+```
+
+---
+
+# Recommended Starting Point
+
+เริ่ม Project ด้วย:
+
+```bash
+npx create-next-app@latest prayer-app
+```
+
+เลือก:
+
+```text
+TypeScript: Yes
+
+ESLint: Yes
+
+Tailwind CSS: Yes
+
+src directory: Optional
+
+App Router: Yes
+```
+
+จากนั้นติดตั้ง:
+
+```bash
+npm install prisma @prisma/client
+npm install zod
+npm install lucide-react
+npm install react-markdown
+npm install next-themes
+```
+
+Initialize Prisma:
+
+```bash
+npx prisma init --datasource-provider sqlite
+```
+
+จากนั้นเริ่มสร้าง:
+
+```text
+Design System
+
+↓
+
+Database Schema
+
+↓
+
+Seed Data
+
+↓
+
+Mobile Homepage
+```
+
+นี่คือ Foundation ที่ควรทำก่อน Feature อื่นทั้งหมด

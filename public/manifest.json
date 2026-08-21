@@ -1,0 +1,17 @@
+{
+  "name": "บทสวดมนต์ดิจิทัล",
+  "short_name": "บทสวดมนต์",
+  "description": "เว็บแอปพลิเคชันรวบรวมบทสวดมนต์ เสริมสิริมงคล อ่านง่าย สบายตา",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF9EF",
+  "theme_color": "#B8862D",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
