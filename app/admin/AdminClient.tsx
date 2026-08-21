@@ -19,9 +19,16 @@ interface AdminClientProps {
   stats: { totalCategories: number; totalChants: number; featuredChants: number };
 }
 
-// Credentials
-const ADMIN_USER = 'admin';
-const ADMIN_PASS = 'Aaaaaa12345##';
+// SHA-256 Hashed Credentials (One-way encryption)
+const ADMIN_USER_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918';
+const ADMIN_PASS_HASH = 'f347c46eeaf6a2dcbfd2e3c5dfc59be355af20f2b5e815d310b4bbed15b694aa';
+
+async function sha256(message: string): Promise<string> {
+  const msgBuffer = new TextEncoder().encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+}
 
 export function AdminClient({ initialCategories, initialChants, stats }: AdminClientProps) {
   const router = useRouter();
@@ -74,20 +81,23 @@ export function AdminClient({ initialCategories, initialChants, stats }: AdminCl
     }
   }, []);
 
-  // Handle Login
-  const handleLogin = (e: React.FormEvent) => {
+  // Handle Login with SHA-256 Hash comparison
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError('');
 
-    if (inputUsername.trim() === ADMIN_USER && inputPassword === ADMIN_PASS) {
-      setIsAuthenticated(true);
-      try {
+    try {
+      const userHash = await sha256(inputUsername.trim());
+      const passHash = await sha256(inputPassword);
+
+      if (userHash === ADMIN_USER_HASH && passHash === ADMIN_PASS_HASH) {
+        setIsAuthenticated(true);
         sessionStorage.setItem('prayer_admin_session', 'authenticated');
-      } catch (err) {
-        console.error(err);
+      } else {
+        setAuthError('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง');
       }
-    } else {
-      setAuthError('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง');
+    } catch (err) {
+      setAuthError('เกิดข้อผิดพลาดในการตรวจสอบรหัสผ่าน');
     }
   };
 
