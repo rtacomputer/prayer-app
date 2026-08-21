@@ -1,12 +1,16 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Chant, Category } from '@/lib/types';
 import { Header } from '@/components/Header';
 import { BottomNav } from '@/components/BottomNav';
+import { LotusLogo } from '@/components/CategoryIcons';
 import { 
   Plus, Edit, Trash2, Star, Eye, EyeOff, Save, 
-  X, Check, Layers, BookOpen, Sparkles, ArrowLeft, RefreshCw
+  X, Check, Layers, BookOpen, Sparkles, ArrowLeft, 
+  Lock, KeyRound, LogOut, ShieldCheck, AlertCircle, Home
 } from 'lucide-react';
 
 interface AdminClientProps {
@@ -15,7 +19,21 @@ interface AdminClientProps {
   stats: { totalCategories: number; totalChants: number; featuredChants: number };
 }
 
+// Credentials
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'Aaaaaa12345##';
+
 export function AdminClient({ initialCategories, initialChants, stats }: AdminClientProps) {
+  const router = useRouter();
+
+  // Authentication State
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [inputUsername, setInputUsername] = useState('');
+  const [inputPassword, setInputPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [authError, setAuthError] = useState('');
+
+  // Admin CMS State
   const [activeTab, setActiveTab] = useState<'chants' | 'categories'>('chants');
   const [categories, setCategories] = useState<Category[]>(initialCategories);
   const [chants, setChants] = useState<Chant[]>(initialChants);
@@ -30,9 +48,12 @@ export function AdminClient({ initialCategories, initialChants, stats }: AdminCl
 
   const [saving, setSaving] = useState(false);
 
-  // Load custom chants/categories from localStorage on mount
+  // Check login session & load data on mount
   useEffect(() => {
     try {
+      const session = sessionStorage.getItem('prayer_admin_session');
+      setIsAuthenticated(session === 'authenticated');
+
       const savedChants = localStorage.getItem('prayer_custom_chants');
       if (savedChants) {
         const parsed = JSON.parse(savedChants);
@@ -49,9 +70,39 @@ export function AdminClient({ initialCategories, initialChants, stats }: AdminCl
         }
       }
     } catch {
-      // ignore
+      setIsAuthenticated(false);
     }
   }, []);
+
+  // Handle Login
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthError('');
+
+    if (inputUsername.trim() === ADMIN_USER && inputPassword === ADMIN_PASS) {
+      setIsAuthenticated(true);
+      try {
+        sessionStorage.setItem('prayer_admin_session', 'authenticated');
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      setAuthError('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง');
+    }
+  };
+
+  // Handle Logout
+  const handleLogout = () => {
+    if (confirm('คุณต้องการออกจากระบบผู้ดูแลหรือไม่?')) {
+      setIsAuthenticated(false);
+      setInputPassword('');
+      try {
+        sessionStorage.removeItem('prayer_admin_session');
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
 
   const saveChantsToStorage = (updated: Chant[]) => {
     setChants(updated);
@@ -174,9 +225,128 @@ export function AdminClient({ initialCategories, initialChants, stats }: AdminCl
     saveCategoriesToStorage(updated);
   };
 
+  // If initial check still loading
+  if (isAuthenticated === null) {
+    return (
+      <div className="flex flex-col min-h-screen items-center justify-center p-4">
+        <LotusLogo className="w-10 h-10 text-[#B8862D] animate-spin" />
+        <p className="text-xs text-[#8B7D6B] mt-2">กำลังโหลด...</p>
+      </div>
+    );
+  }
+
+  // 1. LOGIN SCREEN (If not authenticated)
+  if (!isAuthenticated) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <Header title="เข้าสู่ระบบผู้ดูแล" showBack={true} />
+
+        <div className="flex-1 flex items-center justify-center p-4">
+          <div className="w-full max-w-sm rounded-3xl bg-white dark:bg-[#1E1913] border border-[#EDE1CF] dark:border-[#382F24] p-6 shadow-lg text-center">
+            {/* Header Icon */}
+            <div className="w-14 h-14 mx-auto rounded-2xl bg-[#FBF4E6] dark:bg-[#282015] border border-[#EDE1CF] dark:border-[#3E3428] flex items-center justify-center text-[#B8862D] dark:text-[#E5B85C] shadow-xs mb-3 pulse-glow">
+              <Lock className="w-6 h-6" />
+            </div>
+
+            <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#B8862D]/15 text-[#B8862D] dark:text-[#E5B85C] text-[11px] font-semibold mb-2">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Admin Access</span>
+            </div>
+
+            <h2 className="text-base font-bold text-[#3E332A] dark:text-[#F5EBE1] font-heading">
+              เข้าสู่ระบบผู้ดูแลระบบ
+            </h2>
+            <p className="text-xs text-[#8B7D6B] dark:text-[#A39686] mt-1 mb-5">
+              กรุณาระบุชื่อผู้ใช้และรหัสผ่านเพื่อจัดการข้อมูลบทสวด
+            </p>
+
+            {authError && (
+              <div className="mb-4 p-3 rounded-2xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/50 text-rose-600 dark:text-rose-400 text-xs flex items-center gap-2 text-left">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <span>{authError}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleLogin} className="space-y-3.5 text-left text-xs">
+              <div>
+                <label className="font-semibold block mb-1 text-[#3E332A] dark:text-[#F5EBE1]">
+                  ชื่อผู้ใช้ (Username)
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={inputUsername}
+                  onChange={(e) => setInputUsername(e.target.value)}
+                  placeholder="เช่น admin"
+                  className="w-full p-3 rounded-xl bg-[#FFF9EF] dark:bg-[#14110D] border border-[#EDE1CF] dark:border-[#382F24] text-[#3E332A] dark:text-[#F5EBE1] focus:outline-none focus:ring-2 focus:ring-[#B8862D]/50"
+                />
+              </div>
+
+              <div>
+                <label className="font-semibold block mb-1 text-[#3E332A] dark:text-[#F5EBE1]">
+                  รหัสผ่าน (Password)
+                </label>
+                <div className="relative flex items-center">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    required
+                    value={inputPassword}
+                    onChange={(e) => setInputPassword(e.target.value)}
+                    placeholder="ใส่รหัสผ่านผู้ดูแล"
+                    className="w-full p-3 pr-10 rounded-xl bg-[#FFF9EF] dark:bg-[#14110D] border border-[#EDE1CF] dark:border-[#382F24] text-[#3E332A] dark:text-[#F5EBE1] focus:outline-none focus:ring-2 focus:ring-[#B8862D]/50"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 p-1 text-[#8B7D6B] hover:text-[#3E332A] dark:hover:text-[#F5EBE1]"
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-[#B8862D] to-[#D7A844] hover:from-[#9E7122] hover:to-[#B8862D] text-white font-bold text-xs shadow-md transition-all mt-2 cursor-pointer"
+              >
+                เข้าสู่ระบบ
+              </button>
+            </form>
+
+            <div className="mt-5 pt-4 border-t border-[#EDE1CF]/60 dark:border-[#2D251C]">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1 text-xs text-[#8B7D6B] dark:text-[#A39686] hover:text-[#B8862D]"
+              >
+                <Home className="w-3.5 h-3.5" />
+                กลับหน้าหลัก
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <BottomNav />
+      </div>
+    );
+  }
+
+  // 2. AUTHENTICATED ADMIN DASHBOARD
   return (
     <div className="flex flex-col min-h-screen">
-      <Header title="ระบบจัดการหลังบ้าน" showBack={true} />
+      <Header
+        title="ระบบจัดการหลังบ้าน"
+        showBack={true}
+        rightAction={
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-1 py-1.5 px-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/30 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900 text-xs font-semibold hover:bg-rose-100 transition-colors"
+            title="ออกจากระบบ"
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            <span className="hidden xs:inline">ออก</span>
+          </button>
+        }
+      />
 
       <div className="flex-1 px-4 py-3 space-y-4">
         {/* Stats Grid */}
@@ -494,14 +664,14 @@ export function AdminClient({ initialCategories, initialChants, stats }: AdminCl
                 <button
                   type="button"
                   onClick={() => setIsChantModalOpen(false)}
-                  className="py-2 px-4 rounded-xl bg-white dark:bg-[#282015] border border-[#EDE1CF] dark:border-[#382F24] font-semibold"
+                  className="py-2 px-4 rounded-xl bg-white dark:bg-[#282015] border border-[#EDE1CF] dark:border-[#382F24] font-semibold cursor-pointer"
                 >
                   ยกเลิก
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="py-2 px-5 rounded-xl bg-[#B8862D] hover:bg-[#9E7122] text-white font-bold shadow-xs transition-colors"
+                  className="py-2 px-5 rounded-xl bg-[#B8862D] hover:bg-[#9E7122] text-white font-bold shadow-xs transition-colors cursor-pointer"
                 >
                   {saving ? 'กำลังบันทึก...' : 'บันทึกบทสวด'}
                 </button>
@@ -565,14 +735,14 @@ export function AdminClient({ initialCategories, initialChants, stats }: AdminCl
                 <button
                   type="button"
                   onClick={() => setIsCategoryModalOpen(false)}
-                  className="py-2 px-4 rounded-xl bg-white dark:bg-[#282015] border border-[#EDE1CF] dark:border-[#382F24] font-semibold"
+                  className="py-2 px-4 rounded-xl bg-white dark:bg-[#282015] border border-[#EDE1CF] dark:border-[#382F24] font-semibold cursor-pointer"
                 >
                   ยกเลิก
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="py-2 px-5 rounded-xl bg-[#B8862D] hover:bg-[#9E7122] text-white font-bold shadow-xs"
+                  className="py-2 px-5 rounded-xl bg-[#B8862D] hover:bg-[#9E7122] text-white font-bold shadow-xs cursor-pointer"
                 >
                   {saving ? 'กำลังบันทึก...' : 'บันทึกหมวด'}
                 </button>
