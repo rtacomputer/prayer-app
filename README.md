@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🪷 บทสวดมนต์ดิจิทัล (Digital Prayer App)
+> **เว็บแอปพลิเคชันรวบรวมบทสวดมนต์ เสริมสิริมงคล อ่านง่าย สบายตา (Mobile-First Web App)**
 
-## Getting Started
+เว็บแอปพลิเคชันสำหรับรวบรวมบทสวดมนต์ พระคาถาชินบัญชร บทแผ่เมตตา บทสวดประจำวัน และคาถาต่างๆ ในรูปแบบดิจิทัลที่ออกแบบมาเพื่อการใช้งานบนมือถือโดยเฉพาะ ใช้งานง่าย รวดเร็ว และอ่านสบายตาทั้งกลางวันและกลางคืน
 
-First, run the development server:
+---
+
+## 📱 ฟีเจอร์หลัก (Key Features)
+
+- 🏠 **หน้าแรก (Home)**: แบนเนอร์พระพุทธรูปสิริมงคล, ช่องค้นหาด่วน, เมนูหมวดหมู่บทสวด (Grid), และบทสวดยอดนิยม
+- 📖 **โหมดอ่านบทสวด (Chant Reader)**:
+  - สลับแท็บได้ 4 โหมด: **[ บทสวดบาลี | คำอ่าน | คำแปลไทย | รวมทั้งหมด ]**
+  - ปรับขนาดฟอนต์ได้ 4 ระดับ (`ก-`, `ก`, `ก+`, `ก++`)
+  - โหมดกลางคืน (Dark Mode / Night Mode) ถนอมสายตา
+  - ระบบเลื่อนหน้าจออัตโนมัติ (Auto-scroll) ขณะพนมมือสวดมนต์
+  - เครื่องเล่นเสียงสวดมนต์จำลอง (Audio Player)
+  - ปุ่มนำทางบทก่อนหน้า / บทถัดไป
+  - ปุ่ม **"สวดเสร็จสิ้น (สาธุ 🙏)"** พร้อมคำอวยพรมงคลและเอฟเฟกต์เฉลิมฉลอง
+- 🔍 **ค้นหาบทสวด (Instant Search)**: ค้นหาคำได้แบบ Real-time ตามชื่อบทสวด, คำบาลี และคำแปล
+- ⭐ **รายการโปรด (Favorites)**: บันทึกบทสวดที่สวดเป็นประจำไว้ในเครื่อง (localStorage) ไม่ต้องสมัครสมาชิก
+- ⚙️ **การตั้งค่า (Settings)**: ปรับแต่งขนาดตัวอักษร, เลือกฟอนต์, โหมดการแสดงผล, และจัดการข้อมูล
+- 🛡️ **ระบบจัดการหลังบ้าน (Admin CMS)**: จัดการเพิ่ม/แก้ไข/ลบ บทสวดมนต์และหมวดหมู่ พร้อมฐานข้อมูล SQLite ในตัว
+- 📲 **รองรับ PWA**: รองรับการเพิ่มเป็นแอปบนหน้าจอมือถือ (Add to Home Screen)
+
+---
+
+## 🛠️ เทคโนโลยีที่ใช้ (Tech Stack)
+
+- **Frontend / Framework**: Next.js 16 (App Router) + TypeScript + React 19
+- **Styling**: Tailwind CSS (พร้อม Design Tokens โทนสีทอง-ครีม พรีเมียม)
+- **Icons**: Lucide React
+- **Database**: SQLite + Better-SQLite3
+- **Typography**: Google Fonts (Noto Serif Thai สำหรับบทสวด, Sarabun สำหรับ UI)
+
+---
+
+## 🚀 วิธีการติดตั้งและรันในเครื่อง (Local Setup)
 
 ```bash
+# 1. ติดตั้ง Dependencies
+npm install
+
+# 2. เริ่มรัน Development Server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# 3. เปิดเบราว์เซอร์เข้าใช้งาน
+http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📄 ใบอนุญาต (License)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+สร้างขึ้นเพื่อเป็นธรรมทานและอำนวยความสะดวกแก่พุทธศาสนิกชนในการสวดมนต์เจริญภาวนา ใช้งานฟรี
